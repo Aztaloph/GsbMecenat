@@ -12,6 +12,8 @@ namespace GsbMecenat.BO
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GsbMecenatEntities : DbContext
     {
@@ -33,5 +35,65 @@ namespace GsbMecenat.BO
         public virtual DbSet<Pay> Pays { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
+    
+        public virtual int sp_association_add(string nom, string responsable, string codeIsoPays, Nullable<int> idmission)
+        {
+            var nomParameter = nom != null ?
+                new ObjectParameter("Nom", nom) :
+                new ObjectParameter("Nom", typeof(string));
+    
+            var responsableParameter = responsable != null ?
+                new ObjectParameter("Responsable", responsable) :
+                new ObjectParameter("Responsable", typeof(string));
+    
+            var codeIsoPaysParameter = codeIsoPays != null ?
+                new ObjectParameter("CodeIsoPays", codeIsoPays) :
+                new ObjectParameter("CodeIsoPays", typeof(string));
+    
+            var idmissionParameter = idmission.HasValue ?
+                new ObjectParameter("idmission", idmission) :
+                new ObjectParameter("idmission", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_association_add", nomParameter, responsableParameter, codeIsoPaysParameter, idmissionParameter);
+        }
+    
+        public virtual int sp_association_delete(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_association_delete", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_association_getAll_Result> sp_association_getAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_association_getAll_Result>("sp_association_getAll");
+        }
+    
+        public virtual int sp_association_update(Nullable<int> id, string nom, string responsable, string codeIsoPays, Nullable<int> idmission)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nomParameter = nom != null ?
+                new ObjectParameter("Nom", nom) :
+                new ObjectParameter("Nom", typeof(string));
+    
+            var responsableParameter = responsable != null ?
+                new ObjectParameter("Responsable", responsable) :
+                new ObjectParameter("Responsable", typeof(string));
+    
+            var codeIsoPaysParameter = codeIsoPays != null ?
+                new ObjectParameter("CodeIsoPays", codeIsoPays) :
+                new ObjectParameter("CodeIsoPays", typeof(string));
+    
+            var idmissionParameter = idmission.HasValue ?
+                new ObjectParameter("idmission", idmission) :
+                new ObjectParameter("idmission", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_association_update", idParameter, nomParameter, responsableParameter, codeIsoPaysParameter, idmissionParameter);
+        }
     }
 }
