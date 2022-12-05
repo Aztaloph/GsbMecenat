@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5544a5b8282743a8907012cc50b60656" Name="Diagram1">
+        <EntityTypeShape EntityType="GsbMecenatModel.ActionMecenat" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Association" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.JournalIntervention" Width="1.5" PointX="10.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Mission" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Partenariat" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Pay" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Role" Width="1.5" PointX="5.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GsbMecenatModel.Utilisateur" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="GsbMecenatModel.FK__Partenari__idAct__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="GsbMecenatModel.FK__Associati__CodeI__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="GsbMecenatModel.FK__Associati__IdMis__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="GsbMecenatModel.FK__Partenari__IdAss__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="GsbMecenatModel.FK__JournalIn__IdUti__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="GsbMecenatModel.FK__Utilisate__IdRol__3A81B327" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

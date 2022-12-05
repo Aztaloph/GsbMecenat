@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GsbMecenatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActionMecenat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Intitule" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Association">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Responsable" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodeISOPays" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="IdMission" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JournalIntervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomTable" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="OperationEffectuee" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateHeure" Type="datetime" Nullable="false" />
+          <Property Name="ReferenceEnregistrement" Type="varchar" MaxLength="20" />
+          <Property Name="IdUtilisateur" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Libelle" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Partenariat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DatePartenariat" Type="datetime" Nullable="false" />
+          <Property Name="BudgetPrevisionnel" Type="money" />
+          <Property Name="BudgetReel" Type="money" />
+          <Property Name="IdAssociation" Type="int" Nullable="false" />
+          <Property Name="idActionMecenat" Type="int" />
+        </EntityType>
+        <EntityType Name="Pays">
+          <Key>
+            <PropertyRef Name="CodeISO" />
+          </Key>
+          <Property Name="CodeISO" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Intitule" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pseudo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MotPasse" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Associati__CodeI__35BCFE0A">
+          <End Role="Pays" Type="Self.Pays" Multiplicity="1" />
+          <End Role="Association" Type="Self.Association" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pays">
+              <PropertyRef Name="CodeISO" />
+            </Principal>
+            <Dependent Role="Association">
+              <PropertyRef Name="CodeISOPays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Associati__IdMis__36B12243">
+          <End Role="Mission" Type="Self.Mission" Multiplicity="1" />
+          <End Role="Association" Type="Self.Association" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Association">
+              <PropertyRef Name="IdMission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JournalIn__IdUti__3B75D760">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="JournalIntervention" Type="Self.JournalIntervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalIntervention">
+              <PropertyRef Name="IdUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Partenari__idAct__74AE54BC">
+          <End Role="ActionMecenat" Type="Self.ActionMecenat" Multiplicity="0..1" />
+          <End Role="Partenariat" Type="Self.Partenariat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionMecenat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partenariat">
+              <PropertyRef Name="idActionMecenat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Partenari__IdAss__73BA3083">
+          <End Role="Association" Type="Self.Association" Multiplicity="1" />
+          <End Role="Partenariat" Type="Self.Partenariat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Association">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partenariat">
+              <PropertyRef Name="IdAssociation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Utilisate__IdRol__3A81B327">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Utilisateur">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GsbMecenatModelStoreContainer">
+          <EntitySet Name="ActionMecenat" EntityType="Self.ActionMecenat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Association" EntityType="Self.Association" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JournalIntervention" EntityType="Self.JournalIntervention" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mission" EntityType="Self.Mission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partenariat" EntityType="Self.Partenariat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pays" EntityType="Self.Pays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Associati__CodeI__35BCFE0A" Association="Self.FK__Associati__CodeI__35BCFE0A">
+            <End Role="Pays" EntitySet="Pays" />
+            <End Role="Association" EntitySet="Association" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Associati__IdMis__36B12243" Association="Self.FK__Associati__IdMis__36B12243">
+            <End Role="Mission" EntitySet="Mission" />
+            <End Role="Association" EntitySet="Association" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JournalIn__IdUti__3B75D760" Association="Self.FK__JournalIn__IdUti__3B75D760">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="JournalIntervention" EntitySet="JournalIntervention" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Partenari__idAct__74AE54BC" Association="Self.FK__Partenari__idAct__74AE54BC">
+            <End Role="ActionMecenat" EntitySet="ActionMecenat" />
+            <End Role="Partenariat" EntitySet="Partenariat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Partenari__IdAss__73BA3083" Association="Self.FK__Partenari__IdAss__73BA3083">
+            <End Role="Association" EntitySet="Association" />
+            <End Role="Partenariat" EntitySet="Partenariat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Utilisate__IdRol__3A81B327" Association="Self.FK__Utilisate__IdRol__3A81B327">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GsbMecenatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActionMecenat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Intitule" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Partenariats" Relationship="Self.FK__Partenari__idAct__74AE54BC" FromRole="ActionMecenat" ToRole="Partenariat" />
+        </EntityType>
+        <EntityType Name="Association">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Responsable" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodeISOPays" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IdMission" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pay" Relationship="Self.FK__Associati__CodeI__35BCFE0A" FromRole="Association" ToRole="Pays" />
+          <NavigationProperty Name="Mission" Relationship="Self.FK__Associati__IdMis__36B12243" FromRole="Association" ToRole="Mission" />
+          <NavigationProperty Name="Partenariats" Relationship="Self.FK__Partenari__IdAss__73BA3083" FromRole="Association" ToRole="Partenariat" />
+        </EntityType>
+        <EntityType Name="JournalIntervention">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomTable" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperationEffectuee" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateHeure" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReferenceEnregistrement" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="IdUtilisateur" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK__JournalIn__IdUti__3B75D760" FromRole="JournalIntervention" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Mission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Associations" Relationship="Self.FK__Associati__IdMis__36B12243" FromRole="Mission" ToRole="Association" />
+        </EntityType>
+        <EntityType Name="Partenariat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DatePartenariat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BudgetPrevisionnel" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BudgetReel" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IdAssociation" Type="Int32" Nullable="false" />
+          <Property Name="idActionMecenat" Type="Int32" />
+          <NavigationProperty Name="ActionMecenat" Relationship="Self.FK__Partenari__idAct__74AE54BC" FromRole="Partenariat" ToRole="ActionMecenat" />
+          <NavigationProperty Name="Association" Relationship="Self.FK__Partenari__IdAss__73BA3083" FromRole="Partenariat" ToRole="Association" />
+        </EntityType>
+        <EntityType Name="Pay">
+          <Key>
+            <PropertyRef Name="CodeISO" />
+          </Key>
+          <Property Name="CodeISO" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Associations" Relationship="Self.FK__Associati__CodeI__35BCFE0A" FromRole="Pays" ToRole="Association" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Intitule" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Utilisateurs" Relationship="Self.FK__Utilisate__IdRol__3A81B327" FromRole="Role" ToRole="Utilisateur" />
+        </EntityType>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pseudo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MotPasse" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="JournalInterventions" Relationship="Self.FK__JournalIn__IdUti__3B75D760" FromRole="Utilisateur" ToRole="JournalIntervention" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Utilisate__IdRol__3A81B327" FromRole="Utilisateur" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Partenari__idAct__74AE54BC">
+          <End Role="ActionMecenat" Type="Self.ActionMecenat" Multiplicity="0..1" />
+          <End Role="Partenariat" Type="Self.Partenariat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionMecenat">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partenariat">
+              <PropertyRef Name="idActionMecenat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Associati__CodeI__35BCFE0A">
+          <End Role="Pays" Type="Self.Pay" Multiplicity="1" />
+          <End Role="Association" Type="Self.Association" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pays">
+              <PropertyRef Name="CodeISO" />
+            </Principal>
+            <Dependent Role="Association">
+              <PropertyRef Name="CodeISOPays" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Associati__IdMis__36B12243">
+          <End Role="Mission" Type="Self.Mission" Multiplicity="1" />
+          <End Role="Association" Type="Self.Association" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mission">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Association">
+              <PropertyRef Name="IdMission" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Partenari__IdAss__73BA3083">
+          <End Role="Association" Type="Self.Association" Multiplicity="1" />
+          <End Role="Partenariat" Type="Self.Partenariat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Association">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Partenariat">
+              <PropertyRef Name="IdAssociation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JournalIn__IdUti__3B75D760">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="JournalIntervention" Type="Self.JournalIntervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JournalIntervention">
+              <PropertyRef Name="IdUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Utilisate__IdRol__3A81B327">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Utilisateur">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GsbMecenatEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActionMecenats" EntityType="Self.ActionMecenat" />
+          <EntitySet Name="Associations" EntityType="Self.Association" />
+          <EntitySet Name="JournalInterventions" EntityType="Self.JournalIntervention" />
+          <EntitySet Name="Missions" EntityType="Self.Mission" />
+          <EntitySet Name="Partenariats" EntityType="Self.Partenariat" />
+          <EntitySet Name="Pays" EntityType="Self.Pay" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <AssociationSet Name="FK__Partenari__idAct__74AE54BC" Association="Self.FK__Partenari__idAct__74AE54BC">
+            <End Role="ActionMecenat" EntitySet="ActionMecenats" />
+            <End Role="Partenariat" EntitySet="Partenariats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Associati__CodeI__35BCFE0A" Association="Self.FK__Associati__CodeI__35BCFE0A">
+            <End Role="Pays" EntitySet="Pays" />
+            <End Role="Association" EntitySet="Associations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Associati__IdMis__36B12243" Association="Self.FK__Associati__IdMis__36B12243">
+            <End Role="Mission" EntitySet="Missions" />
+            <End Role="Association" EntitySet="Associations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Partenari__IdAss__73BA3083" Association="Self.FK__Partenari__IdAss__73BA3083">
+            <End Role="Association" EntitySet="Associations" />
+            <End Role="Partenariat" EntitySet="Partenariats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JournalIn__IdUti__3B75D760" Association="Self.FK__JournalIn__IdUti__3B75D760">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+            <End Role="JournalIntervention" EntitySet="JournalInterventions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Utilisate__IdRol__3A81B327" Association="Self.FK__Utilisate__IdRol__3A81B327">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GsbMecenatModelStoreContainer" CdmEntityContainer="GsbMecenatEntities">
+          <EntitySetMapping Name="ActionMecenats">
+            <EntityTypeMapping TypeName="GsbMecenatModel.ActionMecenat">
+              <MappingFragment StoreEntitySet="ActionMecenat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Intitule" ColumnName="Intitule" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Associations">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Association">
+              <MappingFragment StoreEntitySet="Association">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Responsable" ColumnName="Responsable" />
+                <ScalarProperty Name="CodeISOPays" ColumnName="CodeISOPays" />
+                <ScalarProperty Name="IdMission" ColumnName="IdMission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JournalInterventions">
+            <EntityTypeMapping TypeName="GsbMecenatModel.JournalIntervention">
+              <MappingFragment StoreEntitySet="JournalIntervention">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NomTable" ColumnName="NomTable" />
+                <ScalarProperty Name="OperationEffectuee" ColumnName="OperationEffectuee" />
+                <ScalarProperty Name="DateHeure" ColumnName="DateHeure" />
+                <ScalarProperty Name="ReferenceEnregistrement" ColumnName="ReferenceEnregistrement" />
+                <ScalarProperty Name="IdUtilisateur" ColumnName="IdUtilisateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Missions">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Mission">
+              <MappingFragment StoreEntitySet="Mission">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partenariats">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Partenariat">
+              <MappingFragment StoreEntitySet="Partenariat">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DatePartenariat" ColumnName="DatePartenariat" />
+                <ScalarProperty Name="BudgetPrevisionnel" ColumnName="BudgetPrevisionnel" />
+                <ScalarProperty Name="BudgetReel" ColumnName="BudgetReel" />
+                <ScalarProperty Name="IdAssociation" ColumnName="IdAssociation" />
+                <ScalarProperty Name="idActionMecenat" ColumnName="idActionMecenat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pays">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Pay">
+              <MappingFragment StoreEntitySet="Pays">
+                <ScalarProperty Name="CodeISO" ColumnName="CodeISO" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Intitule" ColumnName="Intitule" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Utilisateurs">
+            <EntityTypeMapping TypeName="GsbMecenatModel.Utilisateur">
+              <MappingFragment StoreEntitySet="Utilisateur">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Pseudo" ColumnName="Pseudo" />
+                <ScalarProperty Name="MotPasse" ColumnName="MotPasse" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
