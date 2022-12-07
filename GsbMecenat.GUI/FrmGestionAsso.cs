@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace GsbMecenat.GUI
 {
-    public partial class FrmAccueil : Form
+    public partial class FrmGestionAsso : Form
     {
-        public FrmAccueil()
+        public FrmGestionAsso()
         {
             InitializeComponent();
+        }
+
+        private void btnAjouterAssociation_Click(object sender, EventArgs e)
+        {
+            FrmAjoutAssociation FrmAjoutAssociation = new FrmAjoutAssociation();
+            FrmAjoutAssociation.ShowDialog();
         }
     }
 }

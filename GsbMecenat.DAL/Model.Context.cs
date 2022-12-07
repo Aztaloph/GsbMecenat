@@ -66,10 +66,7 @@ namespace GsbMecenat.BO
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_association_delete", idParameter);
         }
     
-        public virtual ObjectResult<sp_association_getAll_Result> sp_association_getAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_association_getAll_Result>("sp_association_getAll");
-        }
+        
     
         public virtual int sp_association_update(Nullable<int> id, string nom, string responsable, string codeIsoPays, Nullable<int> idmission)
         {

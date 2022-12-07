@@ -22,6 +22,8 @@ namespace GsbMecenat.DAL
         }
         #endregion Singleton
 
+        
+
 
 
         public int AjouterAssociation(Association p)

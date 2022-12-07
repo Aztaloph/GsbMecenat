@@ -33,6 +33,8 @@ namespace GsbMecenat.BLL
             return AssociationDAO.GetInstance().AjouterAssociation(p);
         }
 
+        
+
         public int ModifierAssociation(Association p)
         {
             return AssociationDAO.GetInstance().ModifierAssociation(p);

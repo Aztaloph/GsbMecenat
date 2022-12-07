@@ -33,7 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,14 +53,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrmAccueil.cs">
+    <Compile Include="Frm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmAccueil.Designer.cs">
-      <DependentUpon>FrmAccueil.cs</DependentUpon>
+    <Compile Include="Frm1.Designer.cs">
+      <DependentUpon>Frm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAjoutAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAjoutAssociation.Designer.cs">
+      <DependentUpon>FrmAjoutAssociation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGestionAsso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGestionAsso.Designer.cs">
+      <DependentUpon>FrmGestionAsso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmModifierAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmModifierAssociation.Designer.cs">
+      <DependentUpon>FrmModifierAssociation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSupprimerAssociation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSupprimerAssociation.Designer.cs">
+      <DependentUpon>FrmSupprimerAssociation.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Frm1.resx">
+      <DependentUpon>Frm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAjoutAssociation.resx">
+      <DependentUpon>FrmAjoutAssociation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGestionAsso.resx">
+      <DependentUpon>FrmGestionAsso.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +103,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
